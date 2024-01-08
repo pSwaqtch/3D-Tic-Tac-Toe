@@ -5,30 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>mesh final test</title>
+    <title>game alpha</title>
 </head>
 
-<body>  
-    <div class="text-container">
-        <div id="camera-coordinates" class="text"></div>
-        <div id="hover-cube" class="text"><p>Hovered Cube Coordinates:</p></div>
-        <div id="clicked-cube" class="text"><p>Clicked Cube Coordinates:</p></div>
-        <div id="point-coordinates" class="text"></div>
-    </div>
-
-    <div class="tables">
-        <div class="tic-tac-toe">
-            <div class="grid" id="ticTacToeGrid1"><h2 class="cell label" style="grid-column: span 4;">Layer 1</h2></div>
-            <div class="grid" id="ticTacToeGrid2"><h2 class="cell label" style="grid-column: span 4;">Layer 2</h2></div>
-            <div class="grid" id="ticTacToeGrid3"><h2 class="cell label" style="grid-column: span 4;">Layer 3</h2></div>
-            <div class="grid" id="ticTacToeGrid4"><h2 class="cell label" style="grid-column: span 4;">Layer 4</h2></div>
-        </div>
-    </div>
+<body>
 
     <canvas class="webgl"></canvas>
 
-    <script type="module" src="js/cube_mesh.js"></script>
+    <div id="camera-coordinates" class="text" style="grid-column: span 2"></div>
 
+    <div style="grid-column: span 8">2</div>
+
+    <div id="hover-cube" class="text" style="grid-column: span 2"><p>Hovered Cube Coordinates:</p></div>
+
+    <div style="grid-row: span 8; grid-column: span 2;">
+        <div class="tic-tac-toe">
+            <div class="grid" id="ticTacToeGrid1">
+                <h2 class="cell label" style="grid-column: span 4;">Layer 1</h2>
+            </div>
+            <div class="grid" id="ticTacToeGrid2">
+                <h2 class="cell label" style="grid-column: span 4;">Layer 2</h2>
+            </div>
+
+        </div>
+    </div>
+
+    <div style="grid-row: span 8; grid-column: span 8;z-index: -1;">
+    </div>
+
+    <div style="grid-row: span 8; grid-column: span 2;">
+
+        <div class="tic-tac-toe">
+            <div class="grid" id="ticTacToeGrid3"><h2 class="cell label" style="grid-column: span 4;">Layer 3</h2></div>
+            <div class="grid" id="ticTacToeGrid4"><h2 class="cell label" style="grid-column: span 4;">Layer 4</h2></div>
+        </div>
+
+    </div>
+
+    <div id="clicked-cube" class="text" style="grid-column: span 2"><p>Clicked Cube Coordinates:</p></div>
+
+    <div style="grid-column: span 8">8</div>
+
+    <div id="point-coordinates" class="text" style="grid-column: span 2"></div>
+
+    <script type="module" src="cube_mesh.js"></script>
+    
 </body>
 
 </html>
