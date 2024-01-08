@@ -6,13 +6,10 @@ let controls;
 
 const cubes = [];
 const ticTacToeData = createRandomArray(4,4,4);
-init();
 
-// Mouse move event listener for hover
-window.addEventListener("mousemove", handleMouseMove);
-
-// Mouse click event listener
-window.addEventListener("click", handleMouseClick);
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
+let hoveredCube = null;
 
 // Display current camera coordinates
 const coordinatesElement = document.getElementById('camera-coordinates');
@@ -25,9 +22,24 @@ const coordinatesClick = document.getElementById('clicked-cube');
 
 const coordinatesPoint = document.getElementById('point-coordinates');
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Create a 3D 4x4x4 char array and fill it with random 'X' and 'O'
+init();
 
+// Mouse move event listener for hover
+window.addEventListener("mousemove", handleMouseMove);
+
+// Mouse click event listener
+window.addEventListener("click", handleMouseClick);
+
+document.addEventListener("DOMContentLoaded", generateLayers);
+
+document.addEventListener("DOMContentLoaded", generateCellWidth);
+
+animate();
+
+
+
+function generateLayers() {
+  // Create a 3D 4x4x4 char array and fill it with random 'X' and 'O'
   for (let label = 1; label <= 4; label++) {
     const ticTacToeGrid = document.getElementById("ticTacToeGrid" + label);
 
@@ -46,15 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
   }
-});
-
-animate();
-
-
-
-const raycaster = new THREE.Raycaster();
-const mouse = new THREE.Vector2();
-let hoveredCube = null;
+}
 
 // Function to create a 3D array filled with random 'X' and 'O'
 function createRandomArray(depth, rows, columns) {
@@ -137,7 +141,6 @@ function handleMouseClick(event) {
   }
 }
 
-
 function init() {
   camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 1, 10000);
   camera.position.set(3000, 3000, 3000);
@@ -176,6 +179,7 @@ function init() {
   scene.add(axesHelper);
 
 }
+
 function hoveredCubeCoordinates() {
   if (hoveredCube) {
     const hoveredCubePosition = hoveredCube.position;
@@ -227,3 +231,13 @@ function animate() {
 function render() {
   renderer.render(scene, camera);
 }
+
+function generateCellWidth() {
+    var elements = document.querySelectorAll(".cell:not(.label)");
+
+    // Loop through each element and set the width based on the height
+    elements.forEach(function(element) {
+      var heightValue = getComputedStyle(element).height;
+      element.style.width = heightValue;
+    });
+};
