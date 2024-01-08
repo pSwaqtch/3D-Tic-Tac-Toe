@@ -86,3 +86,15 @@ div {
   width: 95%;
   color: white;
 }
+
+button {
+  color: rgba(127,255,255,0.75);
+  background: transparent;
+  outline: 2px solid #0ff;
+  border: 0px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 10px;
+  font-weight: bold;
+  border-radius: 7px;
+}
