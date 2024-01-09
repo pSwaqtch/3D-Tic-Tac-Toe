@@ -40,19 +40,19 @@ animate();
 
 function generateLayers() {
   // Create a 3D 4x4x4 char array and fill it with random 'X' and 'O'
-  for (let label = 1; label <= 4; label++) {
+  for (let label = 0; label < 4; label++) {
     const ticTacToeGrid = document.getElementById("ticTacToeGrid" + label);
 
     for (let i = 0; i < 4; i++) {
       for (let j = 0; j < 4; j++) {
         const cell = document.createElement("div");
         cell.className = "cell";
-        cell.setAttribute("data-layer", label-1);
+        cell.setAttribute("data-layer", label);
         cell.setAttribute("data-row", i);
         cell.setAttribute("data-column", j);
 
         // Set the content of each cell based on the data in the array
-        cell.textContent = ticTacToeData[label - 1][i][j];
+        cell.textContent = ticTacToeData[label][i][j];
 
         ticTacToeGrid.appendChild(cell);
       }
@@ -91,6 +91,7 @@ function handleMouseMove(event) {
   if (hoveredCube && !hoveredCube.isClicked) {
     hoveredCube.material.color.set(0xcccccc);
     hoveredCubeCoordinates();
+    dehighlightCell();
   }
 
   hoveredCube = intersects.length > 0 ? intersects[0].object : null;
@@ -98,6 +99,9 @@ function handleMouseMove(event) {
   if (hoveredCube && !hoveredCube.isClicked) {
     hoveredCube.material.color.set('#ff0000');
     hoveredCubeCoordinates();
+    highlightCell();
+  } else if (hoveredCube.isClicked) {
+    dehighlightCell();
   }
 }
 
@@ -117,9 +121,9 @@ function handleMouseClick(event) {
 
     // Perform additional game logic based on the clicked cube
     const selectedCubePosition = selectedCube.position ;
-    const layer = ((selectedCubePosition.y/100)+3)/2;
-    const row = (3+(selectedCubePosition.x/100))/2;
-    const col = (3+(selectedCubePosition.z/100))/2;
+    const layer = (3-(selectedCubePosition.y/100))/2;
+    const row = (3-(selectedCubePosition.x/100))/2;
+    const col = (3-(selectedCubePosition.z/100))/2;
 
     ticTacToeData[layer][row][col] = 'X';
     
@@ -132,9 +136,9 @@ function handleMouseClick(event) {
       targetDiv.textContent = ticTacToeData[layer][row][col];
     }
     const coordinatesPointText = `Marked Coordinates: 
-      X: ${layer},
-      Y: ${row},
-      Z: ${col}`;
+    X: ${layer},
+    Y: ${row},
+    Z: ${col}`;
       // console.log(ticTacToeData);
 
     coordinatesPoint.textContent = coordinatesPointText;
@@ -184,9 +188,9 @@ function hoveredCubeCoordinates() {
   if (hoveredCube) {
     const hoveredCubePosition = hoveredCube.position;
     const hoveredCubeCoordinatesText = `Hovered Cube Coordinates: 
-      Layer: ${((hoveredCubePosition.y/100)+3)/2},
-      Row: ${(3+(hoveredCubePosition.x/100))/2},
-      Col: ${(3+(hoveredCubePosition.z/100))/2}`;
+    Layer: ${(3-(hoveredCubePosition.y/100))/2},
+    Row: ${(3-(hoveredCubePosition.x/100))/2},
+    Col: ${(3-(hoveredCubePosition.z/100))/2}`;
 
     coordinatesHover.textContent = hoveredCubeCoordinatesText;
   }
@@ -196,9 +200,9 @@ function clickedCubeCoordinates() {
   if (hoveredCube && hoveredCube.isClicked) {
     const clickedCubePosition = hoveredCube.position;
     const clickedCubeCoordinatesText = `Clicked Cube Coordinates: 
-      Layer: ${((clickedCubePosition.y/100)+3)/2},
-      Row: ${(3+(clickedCubePosition.x/100))/2},
-      Col: ${(3+(clickedCubePosition.z/100))/2}`;
+    Layer: ${(3-(clickedCubePosition.y/100))/2},
+    Row: ${(3-(clickedCubePosition.x/100))/2},
+    Col: ${(3-(clickedCubePosition.z/100))/2}`;
 
     coordinatesClick.textContent = clickedCubeCoordinatesText;
   }
@@ -207,11 +211,62 @@ function clickedCubeCoordinates() {
 function cameraCoordinates() {
   const cameraPosition = camera.position;
   const cameraCoordinatesText = `Camera Coordinates: 
-    X: ${cameraPosition.x.toFixed(2)},
-    Y: ${cameraPosition.y.toFixed(2)},
-    Z: ${cameraPosition.z.toFixed(2)}`;
+  X: ${cameraPosition.x.toFixed(2)},
+  Y: ${cameraPosition.y.toFixed(2)},
+  Z: ${cameraPosition.z.toFixed(2)}`;
 
   coordinatesElement.textContent = cameraCoordinatesText;
+}
+
+function highlightCell() {
+  if (hoveredCube) {
+    const hoveredCubePosition = hoveredCube.position;
+
+    const layer = (3-(hoveredCubePosition.y/100))/2;
+    const row = (3-(hoveredCubePosition.x/100))/2;
+    const col = (3-(hoveredCubePosition.z/100))/2;
+
+    const targetDiv = document.querySelector(`.cell[data-layer="${layer}"][data-row="${row}"][data-column="${col}"]`);
+
+    if (targetDiv) {
+      targetDiv.style.borderColor = '#0f0';
+      targetDiv.style.borderStyle = 'ridge';
+      targetDiv.style.borderWidth = '5px';
+    }
+
+    const targetDivLabel = document.querySelector(`.grid[layerid="${layer}"]`);
+
+    if(targetDivLabel) {
+      targetDivLabel.style.borderColor = '#00ff00';
+      targetDivLabel.style.borderStyle = 'ridge';
+      targetDivLabel.style.borderWidth = '5px';
+    }
+
+  }
+}
+
+function dehighlightCell() {
+  if (hoveredCube) {
+    const hoveredCubePosition = hoveredCube.position;
+
+    const layer = (3-(hoveredCubePosition.y/100))/2;
+    const row = (3-(hoveredCubePosition.x/100))/2;
+    const col = (3-(hoveredCubePosition.z/100))/2;
+
+    const targetDiv = document.querySelector(`.cell[data-layer="${layer}"][data-row="${row}"][data-column="${col}"]`);
+
+    if (targetDiv && !hoveredCube.isClicked) {
+      targetDiv.style.borderColor = '';
+      targetDiv.style.borderStyle = '';
+      targetDiv.style.borderWidth = '';
+    }
+
+    const targetDivLabel = document.querySelector(`.grid[layerid="${layer}"]`);
+
+    if(targetDivLabel) {
+      targetDivLabel.style.borderColor = '';
+    }
+  }
 }
 
 function onWindowResize() {
@@ -233,11 +288,11 @@ function render() {
 }
 
 function generateCellWidth() {
-    var elements = document.querySelectorAll(".cell:not(.label)");
+  var elements = document.querySelectorAll(".cell:not(.label)");
 
     // Loop through each element and set the width based on the height
-    elements.forEach(function(element) {
-      var heightValue = getComputedStyle(element).height;
-      element.style.width = heightValue;
-    });
+  elements.forEach(function(element) {
+    var heightValue = getComputedStyle(element).height;
+    element.style.width = heightValue;
+  });
 };

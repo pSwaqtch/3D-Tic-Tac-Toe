@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: all 0.5s ease; 
 }
 
 body, html {
@@ -56,7 +57,7 @@ div {
 }
 
 .grid {
-  border: 0.2rem solid #f00;
+  border: 5px ridge #f00;
   border-radius: 5px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -66,6 +67,7 @@ div {
   width: 80%;
   margin: auto;
   padding: 15px;
+  transition: all 1.5s ease; 
 }
 
 .cell {
@@ -78,23 +80,39 @@ div {
   margin: auto;
   color: white;
   font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.cell:hover {
+  border: 5px ridge #0f0;
 }
 
 .label {
-  border: 3px solid #f00;
+  border: 3px double rgba(255, 0, 0, 1);
   font-size: 15%;
   width: 95%;
   color: white;
 }
 
 button {
-  color: rgba(127,255,255,0.75);
+  color: rgba(127, 255, 255, 0.75);
   background: transparent;
   outline: 2px solid #0ff;
-  border: 0px;
+  border: 0;
   padding: 5px 10px;
   cursor: pointer;
   margin: 0 10px;
   font-weight: bold;
   border-radius: 7px;
+}
+
+button:hover {
+  color: #fff;
+  background-color: rgba(0, 255, 255, 0.5);
+  padding: 10px 20px;
+}
+
+button:active {
+  color: #000;
+  background-color: rgba(0, 255, 255, 0.75);
 }
