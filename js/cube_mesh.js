@@ -142,6 +142,10 @@ function handleMouseClick(event) {
       // console.log(ticTacToeData);
 
     coordinatesPoint.textContent = coordinatesPointText;
+
+    // Add sphere inside
+    createRotatingCubeSmall(selectedCubePosition);
+    console.log("printed");
   }
 }
 
@@ -180,7 +184,9 @@ function init() {
   window.addEventListener('resize', onWindowResize);
   
   const axesHelper = new THREE.AxesHelper(5000);
+  const axesHelperNeg = new THREE.AxesHelper(-5000);
   scene.add(axesHelper);
+  scene.add(axesHelperNeg);
 
 }
 
@@ -296,3 +302,25 @@ function generateCellWidth() {
     element.style.width = heightValue;
   });
 };
+
+// Function to create a red rotating cubeSmall
+function createRotatingCubeSmall(position) {
+  const cubeSmallGeometry = new THREE.BoxGeometry(80,80,80);
+  const cubeSmallMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+  const cubeSmall = new THREE.Mesh(cubeSmallGeometry, cubeSmallMaterial);
+
+    // Set the cubeSmall's position to the center of the cube
+  cubeSmall.position.copy(position);
+
+    // Add rotation animation to the cubeSmall
+  const animateCubeSmall = () => {
+    cubeSmall.rotation.x += 0.01;
+    cubeSmall.rotation.y += 0.01;
+    requestAnimationFrame(animateCubeSmall);
+  };
+
+  animateCubeSmall();
+
+    // Add the cubeSmall to the scene
+  scene.add(cubeSmall);
+}
