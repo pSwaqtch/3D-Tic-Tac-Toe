@@ -1,5 +1,11 @@
 import * as THREE from 'three';
+
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+
 import { scene } from './scene';
+
+const pivotGroup = new THREE.Group();
 
 function createRandomArray(depth, rows, columns) {
   const array = [];
@@ -20,22 +26,56 @@ function createRandomArray(depth, rows, columns) {
   return array;
 }
 
-function createRotatingToken(position) {
-  const tokenGeometry = new THREE.BoxGeometry(80,80,80);
-  const tokenMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-  const token = new THREE.Mesh(tokenGeometry, tokenMaterial);
+function createRotatingToken(position, tokenLetter) {
+  // Load a font
+  const fontLoader = new FontLoader();
 
-  token.position.copy(position);
-
-  const animateToken = () => {
-    token.rotation.x += 0.01;
-    token.rotation.y += 0.01;
-    requestAnimationFrame(animateToken);
+  const createTextGeometry = (text, font) => {
+    return new TextGeometry(text, {
+      font: font,
+      size: 150,
+      height: 15,
+      curveSegments: 12,
+      bevelEnabled: true,
+      bevelThickness: 2,
+      bevelSize: 1,
+      bevelOffset: 0,
+      bevelSegments: 5,
+    });
   };
 
-  animateToken();
+  fontLoader.load('Courier.json', (font) => {
+  // Create text geometries
+    const textGeometry = createTextGeometry(tokenLetter, font);
 
-  scene.add(token);
+  // Create material
+    // const material = new THREE.MeshPhongMaterial({ color: 0x00ffff, specular: 0x555555, shininess: 30 });
+    // const material = new THREE.MeshPhongMaterial({ color: 0x00ffff, transparent: false });
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ffff, transparent: false });
+
+  // Create meshe
+    const textMesh = new THREE.Mesh(textGeometry, material);
+
+  // Position the meshe
+    textMesh.position.copy(position);
+
+    scene.add(textMesh);
+
+    textGeometry.center();
+
+    scene.add(pivotGroup);
+    pivotGroup.add(textMesh);
+
+  // Animation
+  // Rotate the text mesh
+  // pivotGroup.rotation.y += 0.05;
+
+  });
+
 }
 
-export { createRandomArray, createRotatingToken };
+function animateTokens () {
+  // pivotGroup.rotation.y += 0.05;
+}
+
+export { createRandomArray, createRotatingToken, animateTokens };

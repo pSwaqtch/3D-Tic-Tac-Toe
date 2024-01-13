@@ -49,25 +49,22 @@ function handleMouseClick(event, ticTacToeData) {
     const row = (3-(selectedCubePosition.x/100))/2;
     const col = (3-(selectedCubePosition.z/100))/2;
 
-    ticTacToeData[layer][row][col] = 'X';
-    
     // Find the corresponding div based on the data attributes
     const targetDiv = document.querySelector(`.cell[data-layer="${layer}"][data-row="${row}"][data-column="${col}"]`);
 
     // Check if the div is found and then change its border color
-    if (targetDiv) {
+    if (targetDiv && ticTacToeData[layer][row][col] != 'X' && ticTacToeData[layer][row][col] != 'O' ){
       targetDiv.style.borderColor = '#ff0000'; // Set the border color to red
+      ticTacToeData[layer][row][col] = Math.random() < 0.5 ? 'X' : 'O';
       targetDiv.textContent = ticTacToeData[layer][row][col];
-    }
-    const coordinatesPointText = `Marked Coordinates: 
-    X: ${layer},
-    Y: ${row},
-    Z: ${col}`;
-      // console.log(ticTacToeData);
+
+    // console.log(ticTacToeData);
 
     // Add sphere inside
-    createRotatingToken(selectedCubePosition);
+    createRotatingToken(selectedCubePosition, ticTacToeData[layer][row][col]);
     console.log("printed");
+
+    }
   }
 }
 

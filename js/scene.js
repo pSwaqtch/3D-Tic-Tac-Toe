@@ -1,5 +1,8 @@
 import * as THREE from 'three';
+
 import { TrackballControls } from 'three/addons/controls/TrackballControls.js';
+
+import { animateTokens } from './tokens.js';
 
 let camera, scene, renderer, controls;
 const cubes = [];
@@ -49,6 +52,7 @@ function init(ticTacToeData) {
 
 function animate() {
   requestAnimationFrame(animate);
+  animateTokens();
   controls.update();
   render();
 }
