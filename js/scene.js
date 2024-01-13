@@ -42,6 +42,9 @@ function init(ticTacToeData) {
   const axesHelperNeg = new THREE.AxesHelper(-5000);
   scene.add(axesHelper);
   scene.add(axesHelperNeg);
+
+  renderer.autoClear = true;
+  renderer.setClearColor(0x00ffff, 0.1);
 }
 
 function animate() {

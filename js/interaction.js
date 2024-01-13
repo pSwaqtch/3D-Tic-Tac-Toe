@@ -40,7 +40,7 @@ function handleMouseClick(event, ticTacToeData) {
 
   if (intersects.length > 0) {
     const selectedCube = intersects[0].object;
-    selectedCube.material.color.set('#ff0000');
+    selectedCube.material.color.set('#ffffff');
     selectedCube.isClicked = true;
 
     // Perform additional game logic based on the clicked cube
